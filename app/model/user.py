@@ -7,8 +7,12 @@ from sqlalchemy.sql import text
 class UserModel:
     def __init__(self):
         #eng = create_engine("mysql://testuser:test623@localhost/testdb")
-        #self.db = eng.connect()
-        self.db = torndb.Connection(Config.host, Config.db, user=Config.user, password=Config.password, connect_timeout=5)
+        #conn_str = 'mysql://%s:%s@%s/%s' % (Config.user, Config.password, Config.host, Config.db)
+        conn_str = 'mysql://%s:%s@%s/%s' % ('', '', '', '')
+        eng = create_engine(conn_str)
+        #eng = create_engine("mysql://testuser:test623@localhost/testdb")
+        self.db = eng.connect()
+        #self.db = torndb.Connection(Config.host, Config.db, user=Config.user, password=Config.password, connect_timeout=5)
 
     def get_user_id_from_session(self, session):
         query = 'SELECT _user_id from ic_user_session WHERE _session_hash = MD5(%s)' % session
