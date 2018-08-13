@@ -27,6 +27,7 @@ CREATE TABLE `ic_item` (
 
 CREATE TABLE `ic_variant` (
   `_item_id` int(10) unsigned NOT NULL COMMENT 'Item ID',
+  `_variant_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'variant ID',
   `_name` varchar(100) NOT NULL COMMENT 'name',
   `_selling_price` decimal(18,8) NOT NULL COMMENT 'selling price',
   `_cost_price` decimal(18,8) NOT NULL COMMENT 'cost price',

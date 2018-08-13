@@ -1,8 +1,7 @@
 import os
 from app.handlers.base import BaseHandler
 from app.handlers.handlers import GetApiAccessKeyHandler, CreateSessionHandler, \
-     HttpNotFoundHandler, DestroySessionHandler, \
-     ResetPasswordHandler, ForgotPasswordHandler, ChangePasswordHandler
+     HttpNotFoundHandler
 import tornado.ioloop
 import tornado.options
 import tornado.web
@@ -19,10 +18,6 @@ class Application(tornado.web.Application):
     def __init__(self, *overrides):
         handlers = [
             url(r'/session_create', CreateSessionHandler),
-            url(r'/session_destroy', DestroySessionHandler),
-            url(r'/reset_password', ResetPasswordHandler),
-            url(r'/forgot_password', ForgotPasswordHandler),
-            url(r'/change_password', ChangePasswordHandler),
             url(r'/(.*)', HttpNotFoundHandler)
         ]
 
