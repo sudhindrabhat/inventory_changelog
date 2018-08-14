@@ -14,12 +14,14 @@ class UserModel:
         self.db = eng.connect()
 
     def get_user_id_from_session(self, session):
-        query = 'SELECT _user_id from ic_user_session WHERE _session_hash = MD5(%s)' % session
-        res = self.db.execute(query)
+        query = 'SELECT _user_id from ic_user_session WHERE _session_hash = MD5(:session)'
+        res = self.db.execute(text(str(query)), session=session)
         if not res:
             return None
-
-        return res.fetchone()[0]
+        res = res.fetchone()
+        if not res:
+            return None
+        return res[0]
 
     def get_user_id_from_email(self, email):
         query = 'SELECT _id from ic_user WHERE _unique_id = :email'
