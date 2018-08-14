@@ -134,6 +134,8 @@ class CreateVariantHandler(BaseAuthenticatedHandler):
         properties = self.get_argument('properties', None)
         if not properties:
             raise InvalidInput('properties cannot be empty')
+        print(properties)
+        print(type(properties))
         properties = json.loads(properties)
 
         inventory_model = InventoryModel(self.current_user)
