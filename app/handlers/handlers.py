@@ -134,6 +134,7 @@ class CreateVariantHandler(BaseAuthenticatedHandler):
         properties = self.get_argument('properties', None)
         if not properties:
             raise InvalidInput('properties cannot be empty')
+        properties = json.loads(properties)
 
         inventory_model = InventoryModel(self.current_user)
         variant_id = inventory_model.create_variant(item_id, name, selling_price, cost_price, quantity, properties)
@@ -171,6 +172,8 @@ class ModifyVariantsHandler(BaseAuthenticatedHandler):
         cost_price = self.get_argument('cost_price', None)
         quantity = self.get_argument('quantity', None)
         properties = self.get_argument('properties', None)
+        if properties:
+            properties = json.loads(properties)
 
         inventory_model = InventoryModel(self.current_user)
         status = inventory_model.modify_variant(variant_ids, name, selling_price, cost_price, quantity, properties)
