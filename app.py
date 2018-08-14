@@ -1,7 +1,8 @@
 import os
 from app.handlers.base import BaseHandler
-from app.handlers.handlers import GetApiAccessKeyHandler, CreateSessionHandler, \
-     HttpNotFoundHandler
+from app.handlers.handlers import CreateSessionHandler, \
+     HttpNotFoundHandler, CreateItemHandler, ModifyItemsHandler, DeleteItemHandler, \
+    CreateVariantHandler, ModifyVariantsHandler, DeleteVariantHandler, ActivityFeedHandler
 import tornado.ioloop
 import tornado.options
 import tornado.web
@@ -18,6 +19,13 @@ class Application(tornado.web.Application):
     def __init__(self, *overrides):
         handlers = [
             url(r'/session_create', CreateSessionHandler),
+            url(r'/item/create', CreateItemHandler),
+            url(r'/item/modify', ModifyItemsHandler),
+            url(r'/item/delete', DeleteItemHandler),
+            url(r'/variant/create', CreateVariantHandler),
+            url(r'/variant/modify', ModifyVariantsHandler),
+            url(r'/variant/delete', DeleteVariantHandler),
+            url(r'/activity/preview', ActivityFeedHandler),
             url(r'/(.*)', HttpNotFoundHandler)
         ]
 
