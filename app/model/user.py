@@ -33,7 +33,7 @@ class UserModel:
 
     def get_user_id_from_login(self, email, password):
         query = 'SELECT _id from ic_user WHERE _unique_id = :email and _password_hash = MD5(:password)'
-        res = self.db.execute(text(str(query)), email=email, password_hash=password)
+        res = self.db.execute(text(str(query)), email=email, password=password)
         if not res:
             return None
 
