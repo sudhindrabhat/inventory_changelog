@@ -144,7 +144,9 @@ class InventoryModel:
             query = query + 'AND _user_id = :user_id'
             user_id = int(user_id)
         query = query + ' limit :offset,:limit'
-
+        print(query)
+        print(start_time)
+        print(end_time)
         res = self.db.execute(text(str(query)), user_id=user_id, start_time=start_time, end_time=end_time, offset=offset, limit=limit)
         if not res:
             return None
