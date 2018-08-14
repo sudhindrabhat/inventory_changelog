@@ -20,7 +20,7 @@ class InventoryModel:
         res = self.db.execute(text('INSERT INTO ic_item (_name, _brand, _category) '
                                    'VALUES (:name, :brand, :category)'),
                               name=name, brand=brand, category=category)
-        
+
         item_id = res.lastrowid
 
         item_info = {'item_id':item_id, 'name':name}
@@ -115,11 +115,15 @@ class InventoryModel:
                               user_id=self.user_id, change_type=change_type, change_info=info)
 
 
-    def get_logs(self, ts_start, ts_end, page, limit, user_id=None):
-        pass
+    def get_logs(self, ts_start, ts_end, page, limit=10, user_id=None):
+        query = 'SELECT _user_id, _ts_created, _change_type, _change_info FROM ic_log WHERE _ts_created > :ts_start AND _ts_created < :ts_end '
+        if user_id:
+            pass
+        else:
+            pass
 
 
 
 
 if __name__ == '__main__':
-    inv = InventoryModel()
+    inv = InventoryModel(1)

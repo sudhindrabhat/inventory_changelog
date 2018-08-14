@@ -33,9 +33,9 @@ class UserModel:
 
         return res[0]
 
-    def get_user_id_from_login(self, email, password_hash):
-        query = 'SELECT _id from ic_user WHERE _unique_id = :email and _password_hash = MD5(:password_hash)'
-        res = self.db.execute(text(str(query)), email=email, password_hash=password_hash)
+    def get_user_id_from_login(self, email, password):
+        query = 'SELECT _id from ic_user WHERE _unique_id = :email and _password_hash = MD5(:password)'
+        res = self.db.execute(text(str(query)), email=email, password_hash=password)
         if not res:
             return None
 
@@ -44,13 +44,6 @@ class UserModel:
             return None
 
         return res[0]
-
-    # def get_user_id_from_openid_login(self, email):
-    #     res = self.db.get('SELECT _id from ic_user WHERE _unique_id = %s and _password_hash = MD5(%s)', email, password)
-    #     if not res:
-    #         return None
-    #
-    #     return res['_id']
 
     def create_user_in_db(self, user_email, password, is_open_id=False):
         res = self.db.execute(text('INSERT INTO ic_user (_unique_id, _password_hash, _is_openid, _ts_created) '

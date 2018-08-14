@@ -96,7 +96,21 @@ class DeleteItemHandler(BaseAuthenticatedHandler):
 
 class ModifyItemsHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
-        pass
+        item_ids = self.get_argument('item_ids', None)
+        if not item_ids:
+            raise InvalidInput('item_ids cannot be empty')
+        name = self.get_argument('name', None)
+        brand = self.get_argument('brand', None)
+        category = self.get_argument('category', None)
+        inventory_model = InventoryModel(self.current_user)
+        status = inventory_model.modify_item(item_ids, name, brand, category)
+        if status:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
+
+
 
 class CreateVariantHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
@@ -146,7 +160,23 @@ class DeleteVariantHandler(BaseAuthenticatedHandler):
 
 class ModifyVariantsHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
-        pass
+        variant_ids = self.get_argument('variant_ids', None)
+        if not variant_ids:
+            raise InvalidInput('variant_ids cannot be empty')
+
+        name = self.get_argument('name', None)
+        selling_price = self.get_argument('selling_price', None)
+        cost_price = self.get_argument('cost_price', None)
+        quantity = self.get_argument('quantity', None)
+        properties = self.get_argument('properties', None)
+
+        inventory_model = InventoryModel(self.current_user)
+        status = inventory_model.modify_variant(variant_ids, name, selling_price, cost_price, quantity, properties)
+        if status:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
 
 class ActivityFeedHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
