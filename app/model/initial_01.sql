@@ -36,6 +36,7 @@ CREATE TABLE `ic_variant` (
   PRIMARY KEY (`_variant_id`),
   KEY `FK_item_variant` (`_item_id`),
   CONSTRAINT `FK_item_variant` FOREIGN KEY (`_item_id`) REFERENCES `ic_item` (`_id`)
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `ic_log` (

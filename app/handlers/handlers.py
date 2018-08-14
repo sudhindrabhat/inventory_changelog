@@ -12,6 +12,7 @@ from app.view.templates.json.base import JsonView
 from debug_config import Config
 from app.common.constants import ChangeLogType
 import decimal
+import json
 
 
 class GetApiAccessKeyHandler(BaseHandler):
@@ -99,6 +100,7 @@ class ModifyItemsHandler(BaseAuthenticatedHandler):
         item_ids = self.get_argument('item_ids', None)
         if not item_ids:
             raise InvalidInput('item_ids cannot be empty')
+        item_ids = json.loads(item_ids)
         name = self.get_argument('name', None)
         brand = self.get_argument('brand', None)
         category = self.get_argument('category', None)
@@ -163,7 +165,7 @@ class ModifyVariantsHandler(BaseAuthenticatedHandler):
         variant_ids = self.get_argument('variant_ids', None)
         if not variant_ids:
             raise InvalidInput('variant_ids cannot be empty')
-
+        variant_ids = json.loads(variant_ids)
         name = self.get_argument('name', None)
         selling_price = self.get_argument('selling_price', None)
         cost_price = self.get_argument('cost_price', None)
