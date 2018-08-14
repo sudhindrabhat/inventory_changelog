@@ -134,12 +134,14 @@ class InventoryModel:
         feed = {'activities':[]}
         if offset is None:
             offset = 0
+        else:
+            offset = int(offset)
 
         start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(ts_start)))
         end_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(ts_end)))
         query = 'SELECT _user_id, _ts_created, _change_type, _change_info FROM ic_log WHERE _ts_created > :start_time AND _ts_created < :end_time '
         if user_id:
-            query = query + 'and _user_id = :user_id'
+            query = query + 'AND _user_id = :user_id'
         query = query + ' limit :offset,:limit'
 
         res = self.db.execute(text(str(query)), user_id=user_id, start_time=start_time, end_time=end_time, offset=offset, limit=limit)
