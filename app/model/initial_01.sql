@@ -33,6 +33,7 @@ CREATE TABLE `ic_variant` (
   `_cost_price` decimal(18,8) NOT NULL COMMENT 'cost price',
   `_quantity` int(10) NOT NULL COMMENT 'quantity',
   `_properties` json NOT NULL COMMENT 'properties',
+  PRIMARY KEY (`_variant_id`),
   KEY `FK_item_variant` (`_item_id`),
   CONSTRAINT `FK_item_variant` FOREIGN KEY (`_item_id`) REFERENCES `ic_item` (`_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

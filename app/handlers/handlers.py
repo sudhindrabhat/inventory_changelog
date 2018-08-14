@@ -10,6 +10,7 @@ from app.model.inventory import InventoryModel
 from app.model.user import UserModel
 from app.view.templates.json.base import JsonView
 from debug_config import Config
+from app.common.constants import ChangeLogType
 
 
 
@@ -69,6 +70,13 @@ class CreateItemHandler(BaseAuthenticatedHandler):
         if not category:
             raise InvalidInput('category cannot be empty')
 
+        inventory_model = InventoryModel(self.current_user)
+        item_id = inventory_model.create_item(name, brand, category)
+        if item_id is not None:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
 
 
 class DeleteItemHandler(BaseAuthenticatedHandler):
@@ -77,6 +85,13 @@ class DeleteItemHandler(BaseAuthenticatedHandler):
         if not item_id:
             raise InvalidInput('item_id cannot be empty')
 
+        inventory_model = InventoryModel(self.current_user)
+        status = inventory_model.delete_item(item_id)
+        if status is True:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
 
 
 class ModifyItemsHandler(BaseAuthenticatedHandler):
@@ -103,15 +118,31 @@ class CreateVariantHandler(BaseAuthenticatedHandler):
         properties = self.get_argument('properties', None)
         if not properties:
             raise InvalidInput('properties cannot be empty')
-        
+
+        inventory_model = InventoryModel(self.current_user)
+        variant_id = inventory_model.create_variant(item_id, name, selling_price, cost_price, quantity, properties)
+        if variant_id is not None:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
+
 
 
 
 class DeleteVariantHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
         variant_id = self.get_argument('variant_id', None)
-        if not item_id:
+        if not variant_id:
             raise InvalidInput('variant_id cannot be empty')
+
+        inventory_model = InventoryModel(self.current_user)
+        status = inventory_model.delete_variant(variant_id)
+        if status is True:
+            view = JsonView().set_data({'status': 'success'}).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
 
 class ModifyVariantsHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
