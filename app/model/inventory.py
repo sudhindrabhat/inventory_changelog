@@ -116,11 +116,15 @@ class InventoryModel:
 
 
     def get_logs(self, ts_start, ts_end, page, limit=10, user_id=None):
+        feed = {}
         query = 'SELECT _user_id, _ts_created, _change_type, _change_info FROM ic_log WHERE _ts_created > :ts_start AND _ts_created < :ts_end '
         if user_id:
             pass
         else:
             pass
+
+
+        return feed
 
 
 

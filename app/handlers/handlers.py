@@ -180,7 +180,24 @@ class ModifyVariantsHandler(BaseAuthenticatedHandler):
 
 class ActivityFeedHandler(BaseAuthenticatedHandler):
     def post(self, *args, **kwargs):
-        pass
+        ts_start = self.get_argument('ts_start', None)
+        if not ts_start:
+            raise InvalidInput('ts_start cannot be empty')
+        ts_end = self.get_argument('ts_end', None)
+        if not ts_end:
+            raise InvalidInput('ts_end cannot be empty')
+        user_id = self.get_argument('user_id', None)
+        last_page_no = self.get_argument('page_no', None)
+        limit = 10
+        inventory_model = InventoryModel(user_id)
+        feed = inventory_model.get_logs(ts_start, ts_end, last_page_no, limit, user_id)
+        if feed:
+            feed['status'] = 'success'
+            view = JsonView().set_data(feed).render()
+        else:
+            view = JsonView().render()
+        self.finish(view)
+
 
 
 
