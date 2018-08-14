@@ -2,6 +2,8 @@ import base64
 from debug_config import Config
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+import os
+
 
 class UserModel:
     def __init__(self):
@@ -57,6 +59,9 @@ class UserModel:
                                   'VALUES (:user_id, MD5(:session), NOW())'), user_id=user_id, session=session)
         return session
 
+    def generate_session_id(self):
+        #return base64.b64encode(M2Crypto.m2.rand_bytes(16))
+        return base64.b64encode(os.urandom(16))
 
 if __name__ == '__main__':
     user_model = UserModel()
