@@ -155,7 +155,7 @@ class InventoryModel:
             activity['change_type'] = ChangeLogType.Map[int(row[2])]
             activity['change_info'] = row[3]
             feed['activities'].append(activity)
-            #print(activity)
+            print(activity)
 
         feed['offset'] = offset + limit
         return feed
