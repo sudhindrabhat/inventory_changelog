@@ -8,10 +8,10 @@ class ChangeLogType:
     VARIANT_MOD = 5
 
     Map = {
-        ITEM_ADD : '',
-        ITEM_DEL: '',
-        ITEM_MOD: '',
-        VARIANT_ADD: '',
-        VARIANT_DEL: '',
-        VARIANT_MOD: ''
+        ITEM_ADD : 'item_added',
+        ITEM_DEL: 'item_deleted',
+        ITEM_MOD: 'item_modified',
+        VARIANT_ADD: 'variant_added',
+        VARIANT_DEL: 'variant_deleted',
+        VARIANT_MOD: 'variant_modiied'
     }

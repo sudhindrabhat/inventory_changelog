@@ -11,7 +11,7 @@ from app.model.user import UserModel
 from app.view.templates.json.base import JsonView
 from debug_config import Config
 from app.common.constants import ChangeLogType
-
+import decimal
 
 
 class GetApiAccessKeyHandler(BaseHandler):
@@ -187,10 +187,10 @@ class ActivityFeedHandler(BaseAuthenticatedHandler):
         if not ts_end:
             raise InvalidInput('ts_end cannot be empty')
         user_id = self.get_argument('user_id', None)
-        last_page_no = self.get_argument('page_no', None)
+        offset = self.get_argument('offset', None)
         limit = 10
         inventory_model = InventoryModel(user_id)
-        feed = inventory_model.get_logs(ts_start, ts_end, last_page_no, limit, user_id)
+        feed = inventory_model.get_logs(ts_start, ts_end, offset, limit, user_id)
         if feed:
             feed['status'] = 'success'
             view = JsonView().set_data(feed).render()
