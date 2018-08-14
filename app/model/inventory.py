@@ -1,38 +1,20 @@
 import base64
-#from debug_config import Config
+from debug_config import Config
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
-#from app.common.constants import ChangeLogType
+from app.common.constants import ChangeLogType
 import json
 import time
 import decimal
 
-class ChangeLogType:
-    ITEM_ADD = 0
-    ITEM_DEL = 1
-    ITEM_MOD = 2
-    VARIANT_ADD = 3
-    VARIANT_DEL = 4
-    VARIANT_MOD = 5
-    Map = {
-        ITEM_ADD: 'item_added',
-        ITEM_DEL: 'item_deleted',
-        ITEM_MOD: 'item_modified',
-        VARIANT_ADD: 'variant_added',
-        VARIANT_DEL: 'variant_deleted',
-        VARIANT_MOD: 'variant_modiied'
-    }
 
-#todo:
 class InventoryModel:
     def __init__(self, user_id=None):
         self.user_id=user_id
-        # conn_str = 'mysql://%s:%s@%s/%s' % (Config.user, Config.password, Config.host, Config.db)
-        conn_str = 'mysql://%s:%s@%s/%s' % ('', '', '', '')
+        conn_str = 'mysql://%s:%s@%s/%s' % (Config.user, Config.password, Config.host, Config.db)
+        #conn_str = 'mysql://%s:%s@%s/%s' % ('', '', '', '')
         eng = create_engine(conn_str)
-        # eng = create_engine("mysql://testuser:test623@localhost/testdb")
         self.db = eng.connect()
-        # self.db = torndb.Connection(Config.host, Config.db, user=Config.user, password=Config.password, connect_timeout=5)
 
     def create_item(self, name, brand, category):
         #todo: insert within a transaction
@@ -168,7 +150,7 @@ class InventoryModel:
             activity = {}
             activity['user_id'] = int(row[0])
             activity['ts_created'] = row[1].strftime('%Y-%m-%d %H:%M:%S')
-            activity['change_type'] = ChangeLogType.Map(int(row[2]))
+            activity['change_type'] = ChangeLogType.Map[int(row[2])]
             activity['change_info'] = row[3]
             feed['activities'].append(activity)
             print(activity)
