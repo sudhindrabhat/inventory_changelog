@@ -135,8 +135,8 @@ class InventoryModel:
         if offset is None:
             offset = 0
 
-        start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(ts_start))
-        end_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(ts_end))
+        start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(ts_start)))
+        end_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(int(ts_end)))
         query = 'SELECT _user_id, _ts_created, _change_type, _change_info FROM ic_log WHERE _ts_created > :start_time AND _ts_created < :end_time '
         if user_id:
             query = query + 'and _user_id = :user_id'
